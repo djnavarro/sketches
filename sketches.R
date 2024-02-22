@@ -34,6 +34,7 @@ points <- new_class(
 # contain a computed aesthetic object and a computed points object
 drawable <- new_class(
   name = "drawable",
+  abstract = TRUE,
   properties = list(
     style = new_property(
       class = style,
