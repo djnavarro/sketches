@@ -1,11 +1,18 @@
 source(here::here("sketches.R"))
 
-dat <- tibble::tibble(
+style_data <- tibble::tibble(
   fill = c("#e50000", "#ff8d00", "#ffee00", "#028121", "#004cff", "#770088"),
-  color = fill,
-  x_center = cos(seq(0, pi * 5/3, length.out = 6)),
-  y_center = sin(seq(0, pi * 5/3, length.out = 6)),
-  n = 500
+  color = fill
 )
 
-sketch(shapes = purrr::pmap(dat, blob)) |> draw()
+blobs_data <- tibble::tibble(
+  style = purrr::pmap(style_data, style),
+  x = cos(seq(0, pi * 5/3, length.out = 6)),
+  y = sin(seq(0, pi * 5/3, length.out = 6)),
+  n = 500L
+)
+
+blobs <- purrr::pmap(blobs_data, blob)
+
+s <- sketch(shapes = blobs)
+draw(s)
