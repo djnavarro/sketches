@@ -109,7 +109,7 @@ circle <- new_class(
     if (length(self@y) != 1) return("y must be length 1")
     if (length(self@radius) != 1) return("radius must be length 1")
     if (length(self@n) != 1) return("n must be length 1")
-    if (self@radius < 0) return("radius must be a non-negative negative")
+    if (self@radius < 0) return("radius must be a non-negative number")
     if (self@n < 1L) return("n must be a positive integer")
   },
   constructor = function(x = 0, y = 0, radius = 1, n = 100L, ...) {
@@ -181,6 +181,21 @@ blob <- new_class(
       seed = seed,
       style = style(...)
     )
+  },
+  validator = function(self) {
+    if (length(self@x) != 1) return("x must be length 1")
+    if (length(self@y) != 1) return("y must be length 1")
+    if (length(self@radius) != 1) return("radius must be length 1")
+    if (length(self@range) != 1) return("range must be length 1")
+    if (length(self@n) != 1) return("n must be length 1")
+    if (length(self@frequency) != 1) return("frequency must be length 1")
+    if (length(self@octaves) != 1) return("octaves must be length 1")
+    if (length(self@seed) != 1) return("seed must be length 1")
+    if (self@radius < 0) return("radius must be a non-negative number")
+    if (self@range < 0) return("range must be a non-negative number")
+    if (self@frequency < 0) return("frequency must be a non-negative number")
+    if (self@n < 1L) return("n must be a positive integer")
+    if (self@octaves < 1L) return("octaves must be a positive integer")
   }
 )
 
@@ -251,6 +266,21 @@ ribbon <- new_class(
       seed = seed,
       style = style(...)
     )
+  },
+  validator = function(self) {
+    if (length(self@x) != 1) return("x must be length 1")
+    if (length(self@y) != 1) return("y must be length 1")
+    if (length(self@xend) != 1) return("xend must be length 1")
+    if (length(self@yend) != 1) return("yend must be length 1")
+    if (length(self@width) != 1) return("width must be length 1")
+    if (length(self@n) != 1) return("n must be length 1")
+    if (length(self@frequency) != 1) return("frequency must be length 1")
+    if (length(self@octaves) != 1) return("octaves must be length 1")
+    if (length(self@seed) != 1) return("seed must be length 1")
+    if (self@width < 0) return("width must be a non-negative number")
+    if (self@frequency < 0) return("frequency must be a non-negative number")
+    if (self@n < 1L) return("n must be a positive integer")
+    if (self@octaves < 1L) return("octaves must be a positive integer")
   }
 )
 
