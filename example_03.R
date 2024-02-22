@@ -18,6 +18,6 @@ values <- tibble::tibble(
 # list of blobs to draw
 ribbons <- purrr::pmap(values, ribbon)
 
-# create a sketch from the blobs and then draw the sketch
+# create a sketch from the ribbons and then draw the sketch
 ribbons |> sketch() |> draw(xlim = c(-2, 2), ylim = c(-2, 2))
 

@@ -1,6 +1,4 @@
-
 library(S7)
-
 
 # classes that define shapes ----------------------------------------------
 
@@ -199,9 +197,8 @@ blob <- new_class(
   }
 )
 
-
 # ribbons are similar to blobs, but the polygon is defined by movement along a
-# line
+# line rather than around a circle
 ribbon <- new_class(
   name = "ribbon",
   parent = drawable,
@@ -284,9 +281,6 @@ ribbon <- new_class(
   }
 )
 
-
-
-
 # sketch class ------------------------------------------------------------
 
 # a sketch is a list of drawables
@@ -307,8 +301,6 @@ sketch <- new_class(
   e1@shapes <- c(e1@shapes, e2)
   e1
 }
-
-
 
 # draw generic and methods ------------------------------------------------
 
@@ -398,7 +390,6 @@ method(draw, class_any) <- function(object, ...) {
   return(invisible(NULL))
 }
 
-
 # convert methods ---------------------------------------------------------
 
 # convert a drawable to a plain shape
@@ -409,5 +400,3 @@ method(convert, list(drawable, shape)) <- function(from, to) {
     y = from@points@y
   )
 }
-
-
