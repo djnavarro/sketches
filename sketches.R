@@ -45,7 +45,8 @@ drawable <- new_class(
       class = points,
       getter = function(self) points(x = numeric(0L), y = numeric(0L))
     )
-  )
+  ),
+  constructor = function(...) new_object(S7_object(), style = style(...))
 )
 
 # shapes are the simplest kind of drawable object: the user passes the
@@ -69,6 +70,14 @@ shape <- new_class(
     if (length(self@x) != length(self@y)) {
       "x and y must be the same length"
     }
+  },
+  constructor = function(x, y, ...) {
+    new_object(
+      drawable(),
+      x = x,
+      y = y,
+      style = style(...)
+    )
   }
 )
 
@@ -80,10 +89,10 @@ circle <- new_class(
   name = "circle",
   parent = drawable,
   properties = list(
-    x      = new_property(class_numeric, default = 0),
-    y      = new_property(class_numeric, default = 0),
-    radius = new_property(class_numeric, default = 1),
-    n      = new_property(class_integer, default = 100L),
+    x      = class_numeric,
+    y      = class_numeric,
+    radius = class_numeric,
+    n      = class_integer,
     points = new_property(
       class = points,
       getter = function(self) {
@@ -102,6 +111,16 @@ circle <- new_class(
     if (length(self@n) != 1) return("n must be length 1")
     if (self@radius < 0) return("radius must be a non-negative negative")
     if (self@n < 1L) return("n must be a positive integer")
+  },
+  constructor = function(x = 0, y = 0, radius = 1, n = 100L, ...) {
+    new_object(
+      drawable(),
+      x = x,
+      y = y,
+      radius = radius,
+      n = n,
+      style = style(...)
+    )
   }
 )
 
@@ -112,15 +131,14 @@ blob <- new_class(
   name = "blob",
   parent = drawable,
   properties = list(
-    x          = new_property(class_numeric, default = 0),
-    y          = new_property(class_numeric, default = 0),
-    radius     = new_property(class_numeric, default = 1),
-    range      = new_property(class_numeric, default = 0.2),
-    n          = new_property(class_integer, default = 100L),
-    frequency  = new_property(class_numeric, default = 1),
-    octaves    = new_property(class_integer, default = 2L),
-    seed       = new_property(class_integer, default = 1L),
-
+    x          = class_numeric,
+    y          = class_numeric,
+    radius     = class_numeric,
+    range      = class_numeric,
+    n          = class_integer,
+    frequency  = class_numeric,
+    octaves    = class_integer,
+    seed       = class_integer,
     points = new_property(
       class = points,
       getter = function(self) {
@@ -141,7 +159,29 @@ blob <- new_class(
         )
       }
     )
-  )
+  ),
+  constructor = function(x = 0,
+                         y = 0,
+                         radius = 1,
+                         range = 0.2,
+                         n = 100L,
+                         frequency = 1,
+                         octaves = 2L,
+                         seed = 1L,
+                         ...) {
+    new_object(
+      drawable(),
+      x = x,
+      y = y,
+      radius = radius,
+      range = range,
+      n = n,
+      frequency = frequency,
+      octaves = octaves,
+      seed = seed,
+      style = style(...)
+    )
+  }
 )
 
 
