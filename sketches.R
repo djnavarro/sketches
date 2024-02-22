@@ -185,6 +185,77 @@ blob <- new_class(
 )
 
 
+# ribbons are similar to blobs, but the polygon is defined by movement along a
+# line
+ribbon <- new_class(
+  name = "ribbon",
+  parent = drawable,
+  properties = list(
+    x          = class_numeric,
+    y          = class_numeric,
+    xend       = class_numeric,
+    yend       = class_numeric,
+    width      = class_numeric,
+    n          = class_integer,
+    frequency  = class_numeric,
+    octaves    = class_integer,
+    seed       = class_integer,
+    points = new_property(
+      class = points,
+      getter = function(self) {
+        x <- seq(self@x, self@xend, length.out = self@n)
+        y <- seq(self@y, self@yend, length.out = self@n)
+        displacement <- ambient::fracture(
+          noise = ambient::gen_simplex,
+          fractal = ambient::fbm,
+          x = x,
+          y = y,
+          frequency = self@frequency,
+          seed = self@seed,
+          octaves = self@octaves
+        ) |>
+          ambient::normalize(to = c(0, 1))
+        taper <- sqrt(
+          seq(0, 1, length.out = self@n) * seq(1, 0, length.out = self@n)
+        )
+        width <- displacement * taper * self@width
+        dx <- self@xend - self@x
+        dy <- self@yend - self@y
+        points(
+          x = c(x - width * dy, x[self@n:1L] + width[self@n:1L] * dy),
+          y = c(y + width * dx, y[self@n:1L] - width[self@n:1L] * dx)
+        )
+      }
+    )
+  ),
+  constructor = function(x = 0,
+                         y = 0,
+                         xend = 1,
+                         yend = 1,
+                         width = 0.2,
+                         n = 100L,
+                         frequency = 1,
+                         octaves = 2L,
+                         seed = 1L,
+                         ...) {
+    new_object(
+      drawable(),
+      x = x,
+      y = y,
+      xend = xend,
+      yend = yend,
+      width = width,
+      n = n,
+      frequency = frequency,
+      octaves = octaves,
+      seed = seed,
+      style = style(...)
+    )
+  }
+)
+
+
+
 
 # sketch class ------------------------------------------------------------
 
